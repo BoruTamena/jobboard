@@ -1,0 +1,49 @@
+
+services:
+  app:
+    container_name: app_container 
+    build: .
+    ports:
+      - "8000:8000"
+    networks:
+      - jobboard_network
+    volumes:
+      - ./docs:/app/docs  
+    depends_on:
+      - p_sql
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: swagger_ui_container
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./docs:/usr/share/nginx/html/docs 
+    environment:
+      API_URL: /docs/swagger.yaml 
+    depends_on:
+      - app
+
+  p_sql:
+    container_name: psql_db
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    
+    ports:
+      - "5430:5432"
+    networks:
+      - jobboard_network_
+
+    environment:
+        POSTGRES_PASSWORD: password
+    
+networks:
+  jobboard_network:
+    driver: bridge
+   
+volumes:
+
+  postgres_data:
+     driver: local
