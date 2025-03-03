@@ -1,20 +1,17 @@
 package initiator
 
-// @title My API
-// @description This is a sample Swagger API documentation.
+// @title JobBoard
 // @version 1.0.0
-// @BasePath /api/v1
-
+// @description This is a  Swagger API documentation for GoChat Open source Project.
+// @contact.name Boru Tamene Yadeta
+// @contact.url  https://github.com/BoruTamena
 func Init() {
 
 	/*
-
 		InitConfig( arg)
-
 		IntDb( arg)
-
 		cache,err :=IntCache(arg)
 
-
 	*/
+
 }

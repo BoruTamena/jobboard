@@ -1,0 +1,62 @@
+definitions:
+  dto.UserDto:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      user_name:
+        type: string
+    type: object
+  dto.UserLogin:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+info:
+  contact:
+    name: Boru Tamene Yadeta
+    url: https://github.com/BoruTamena
+  description: This is a  Swagger API documentation for GoChat Open source Project.
+  title: JobBoard
+  version: 1.0.0
+paths:
+  /signin:
+    post:
+      consumes:
+      - application/json
+      description: user login
+      parameters:
+      - description: user login request body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserLogin'
+      produces:
+      - application/json
+      responses: {}
+      summary: login to the system
+      tags:
+      - user
+  /user:
+    post:
+      consumes:
+      - application/json
+      description: create new user on boardapi
+      parameters:
+      - description: user request body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserDto'
+      produces:
+      - application/json
+      responses: {}
+      summary: create new user
+      tags:
+      - user
+swagger: "2.0"

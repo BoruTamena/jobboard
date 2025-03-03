@@ -1,6 +1,9 @@
 package handler
 
+import "github.com/gin-gonic/gin"
+
 // define your handlers interface here
 
-type User interface {
+type Auth interface {
+	RegisterUser(ctx *gin.Context)
 }

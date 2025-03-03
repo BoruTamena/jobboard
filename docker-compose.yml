@@ -10,7 +10,7 @@ services:
     volumes:
       - ./docs:/app/docs  
     depends_on:
-      - p_sql
+      - psql_db
 
   swagger-ui:
     image: swaggerapi/swagger-ui
@@ -24,7 +24,7 @@ services:
     depends_on:
       - app
 
-  p_sql:
+  psql_db:
     container_name: psql_db
     image: postgres
     volumes:
@@ -34,7 +34,7 @@ services:
     ports:
       - "5430:5432"
     networks:
-      - jobboard_network_
+      - jobboard_network
 
     environment:
         POSTGRES_PASSWORD: password
