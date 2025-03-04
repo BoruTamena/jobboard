@@ -109,7 +109,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "JobBoard",
-	Description:      "This is a  Swagger API documentation for GoChat Open source Project.",
+	Description:      "This is a  Swagger API documentation for JobBoard Open source Project.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
