@@ -6,4 +6,6 @@ import "github.com/gin-gonic/gin"
 
 type Auth interface {
 	RegisterUser(ctx *gin.Context)
+
+	SignIn(ctx *gin.Context)
 }
