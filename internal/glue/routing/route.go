@@ -11,10 +11,9 @@ type Router struct {
 
 func RegisterRoute(rgroup *gin.RouterGroup, routes []Router) {
 
-	var handler []gin.HandlerFunc
-
 	for _, route := range routes {
 
+		var handler []gin.HandlerFunc
 		handler = append(handler, route.Middlewares...)
 		handler = append(handler, route.Handler)
 

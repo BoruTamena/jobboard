@@ -12,4 +12,5 @@ type Auth interface {
 type UserProfile interface {
 	CreateUserProfile(ctx *gin.Context)
 	GetUserProfile(ctx *gin.Context)
+	UpdateUserProfile(ctx *gin.Context)
 }

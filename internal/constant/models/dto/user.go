@@ -11,17 +11,6 @@ type UserDto struct {
 	Password string `json:"password"`
 }
 
-type UserLogin struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
-type UserProfie struct {
-	Bio      string   `json:"bio"`
-	Location string   `json:"location"`
-	Skills   []string `json:"skills"`
-}
-
 // validation
 func (u UserDto) Validate() error {
 
@@ -32,6 +21,12 @@ func (u UserDto) Validate() error {
 	)
 }
 
+type UserLogin struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+// login validation
 func (l UserLogin) Validate() error {
 
 	return validation.ValidateStruct(&l,
@@ -41,10 +36,17 @@ func (l UserLogin) Validate() error {
 
 }
 
+type UserProfie struct {
+	Bio      string   `json:"bio"`
+	Location string   `json:"location"`
+	Skills   []string `json:"skills"`
+}
+
+// profile validation
 func (up UserProfie) Validate() error {
 
 	return validation.ValidateStruct(&up,
-		validation.Field(&up.Bio, validation.Required, validation.Min(15)),
+		validation.Field(&up.Bio, validation.Required),
 		validation.Field(&up.Location, validation.Required),
 	)
 

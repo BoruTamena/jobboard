@@ -27,6 +27,7 @@ func Init() {
 	ServerEngine := gin.Default()
 	rg := ServerEngine.Group("v1")
 
+	log.Println("making migiration")
 	// initalizing migiration
 	mg := InitMigiration(config.Migration.Path, config.Db.PgUrl)
 
@@ -39,6 +40,7 @@ func Init() {
 
 	persistence := InitPersistence(pdb)
 
+	log.Println("initalizing module")
 	// Initalizing Module
 	md := InitModule(persistence)
 	// Initalizing Handler
