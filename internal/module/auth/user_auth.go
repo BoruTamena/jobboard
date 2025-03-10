@@ -50,6 +50,7 @@ func (atmd *authModule) RegisterUser(ctx context.Context, user dto.UserDto) (err
 	return nil, dto.UserDto{
 		UserName: db_res.UserName,
 		Password: user.Password,
+		Email:    user.Email,
 	}
 }
 

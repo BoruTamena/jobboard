@@ -24,11 +24,12 @@ func AuthHandler(authmodule module.AuthModule) handler.Auth {
 }
 
 // @Summary create new user
-// @Tags user
+// @Tags auth
 // @Description create new user on boardapi
 // @Accept json
 // @Produce json
 // @Param body body dto.UserDto true "user request body"
+// @Success 201 {object} response.Response
 // @Router /user [post]
 func (ath *authHandler) RegisterUser(ctx *gin.Context) {
 
@@ -63,11 +64,12 @@ func (ath *authHandler) RegisterUser(ctx *gin.Context) {
 }
 
 // @Summary login to the system
-// @Tags user
+// @Tags auth
 // @Description user login
 // @Accept json
 // @Produce json
 // @Param body body dto.UserLogin true "user login request body"
+// @Success 201 {object} response.Response
 // @Router /signin [post]
 func (ath *authHandler) SignIn(ctx *gin.Context) {
 

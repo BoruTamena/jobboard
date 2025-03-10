@@ -18,3 +18,10 @@ type User struct {
 	Role      string
 	CreatedAt sql.NullTime
 }
+
+type UserProfile struct {
+	ID       uuid.UUID
+	UserID   uuid.UUID
+	Bio      sql.NullString
+	Location sql.NullString
+}

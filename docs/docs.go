@@ -28,7 +28,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "auth"
                 ],
                 "summary": "login to the system",
                 "parameters": [
@@ -42,7 +42,14 @@ const docTemplate = `{
                         }
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
             }
         },
         "/user": {
@@ -55,7 +62,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "auth"
                 ],
                 "summary": "create new user",
                 "parameters": [
@@ -69,7 +76,55 @@ const docTemplate = `{
                         }
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{id}/profile": {
+            "post": {
+                "description": "create profile",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "create new user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id ",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "user profile request body",
+                        "name": "profile",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.UserProfie"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/response.Response"
+                        }
+                    }
+                }
             }
         }
     },
@@ -95,6 +150,32 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.UserProfie": {
+            "type": "object",
+            "properties": {
+                "bio": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "skills": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "response.Response": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "status": {
                     "type": "string"
                 }
             }

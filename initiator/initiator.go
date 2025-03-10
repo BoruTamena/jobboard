@@ -17,7 +17,7 @@ func Init() {
 
 	log.Println("Initalizing config file")
 
-	err, config := InitViper("")
+	err, config := InitViper("./")
 
 	if err != nil {
 
@@ -28,11 +28,9 @@ func Init() {
 	rg := ServerEngine.Group("v1")
 
 	// initalizing migiration
-	mg := InitMigiration("", config.Db.PgUrl)
+	mg := InitMigiration(config.Migration.Path, config.Db.PgUrl)
 
-	if err := mg.Up(); err != nil {
-		log.Println("migiration fail")
-	}
+	UpMigiration(mg)
 
 	// Init Persistence layer
 	con_pol := InitPgDb(*config)

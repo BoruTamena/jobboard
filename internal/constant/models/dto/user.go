@@ -16,6 +16,13 @@ type UserLogin struct {
 	Password string `json:"password"`
 }
 
+type UserProfie struct {
+	Bio      string   `json:"bio"`
+	Location string   `json:"location"`
+	Skills   []string `json:"skills"`
+}
+
+// validation
 func (u UserDto) Validate() error {
 
 	return validation.ValidateStruct(&u,
@@ -30,6 +37,15 @@ func (l UserLogin) Validate() error {
 	return validation.ValidateStruct(&l,
 		validation.Field(&l.Email, validation.Required, is.Email),
 		validation.Field(&l.Password, validation.Required, validation.Length(6, 8)),
+	)
+
+}
+
+func (up UserProfie) Validate() error {
+
+	return validation.ValidateStruct(&up,
+		validation.Field(&up.Bio, validation.Required, validation.Min(15)),
+		validation.Field(&up.Location, validation.Required),
 	)
 
 }

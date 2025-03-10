@@ -7,9 +7,36 @@ package db
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/google/uuid"
 )
+
+const createProfile = `-- name: CreateProfile :one
+insert into user_profiles (
+    user_id ,
+    bio ,
+    location 
+) values ($1,$2,$3) returning id, user_id, bio, location
+`
+
+type CreateProfileParams struct {
+	UserID   uuid.UUID
+	Bio      sql.NullString
+	Location sql.NullString
+}
+
+func (q *Queries) CreateProfile(ctx context.Context, arg CreateProfileParams) (UserProfile, error) {
+	row := q.db.QueryRow(ctx, createProfile, arg.UserID, arg.Bio, arg.Location)
+	var i UserProfile
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.Bio,
+		&i.Location,
+	)
+	return i, err
+}
 
 const createUser = `-- name: CreateUser :one
 insert into users(

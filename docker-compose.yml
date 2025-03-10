@@ -2,7 +2,9 @@
 services:
   app:
     container_name: app_container 
-    build: .
+    build: 
+      context: backend
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     networks:
@@ -17,6 +19,7 @@ services:
     container_name: swagger_ui_container
     ports:
       - "8080:8080"
+    
     volumes:
       - ./docs:/usr/share/nginx/html/docs 
     environment:

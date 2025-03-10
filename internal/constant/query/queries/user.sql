@@ -1,5 +1,4 @@
 
-
 -- name: CreateUser :one
 insert into users(
     id ,
@@ -12,3 +11,17 @@ insert into users(
 
 -- name: GetUserByEmail :one 
 select * from users where email=$1 ;
+
+
+-- name: CreateProfile :one
+insert into user_profiles (
+    user_id ,
+    bio ,
+    location 
+) values ($1,$2,$3) returning *;
+
+
+-- name: GetUserProfile :one
+select * from users 
+join user_profiles 
+on users.id =user_profiles.user_id;
