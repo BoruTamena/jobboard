@@ -93,3 +93,58 @@ func (q *Queries) GetUserByEmail(ctx context.Context, email string) (User, error
 	)
 	return i, err
 }
+
+const getUserProfile = `-- name: GetUserProfile :one
+select users.id,user_name,email,password,bio,location from users 
+join user_profiles 
+on users.id =user_profiles.user_id
+where users.id =$1
+`
+
+type GetUserProfileRow struct {
+	ID       uuid.UUID
+	UserName string
+	Email    string
+	Password string
+	Bio      sql.NullString
+	Location sql.NullString
+}
+
+func (q *Queries) GetUserProfile(ctx context.Context, id uuid.UUID) (GetUserProfileRow, error) {
+	row := q.db.QueryRow(ctx, getUserProfile, id)
+	var i GetUserProfileRow
+	err := row.Scan(
+		&i.ID,
+		&i.UserName,
+		&i.Email,
+		&i.Password,
+		&i.Bio,
+		&i.Location,
+	)
+	return i, err
+}
+
+const updateProfile = `-- name: UpdateProfile :one
+update user_profiles 
+set bio=$2 , location=$3
+where user_id=$1 
+returning id, user_id, bio, location
+`
+
+type UpdateProfileParams struct {
+	UserID   uuid.UUID
+	Bio      sql.NullString
+	Location sql.NullString
+}
+
+func (q *Queries) UpdateProfile(ctx context.Context, arg UpdateProfileParams) (UserProfile, error) {
+	row := q.db.QueryRow(ctx, updateProfile, arg.UserID, arg.Bio, arg.Location)
+	var i UserProfile
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.Bio,
+		&i.Location,
+	)
+	return i, err
+}

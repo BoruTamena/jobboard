@@ -57,3 +57,62 @@ func (upm *userProfile) CreateUserProfile(ctx context.Context, user_id string, u
 	return profile, nil
 
 }
+
+func (upm *userProfile) UpdateUserProfile(ctx context.Context, user_id string, userProfileData dto.UserProfie) (db.UserProfile, error) {
+
+	// TODO CONVERT USERID TO APROPRIATE TYPE
+
+	Id, err := uuid.Parse(user_id)
+
+	if err != nil {
+
+		return db.UserProfile{}, err
+	}
+
+	if err := userProfileData.Validate(); err != nil {
+		// validation
+		err := errors.BadInput.Wrap(err, "bad user input ").
+			WithProperty(errors.ErrorCode, 400)
+
+		log.Println("bad user input for create profile", err.Error())
+
+		return db.UserProfile{}, err
+
+	}
+
+	// calling storage
+
+	profile, err := upm.userStorageProfile.UpdateUserProfile(ctx, Id, userProfileData)
+
+	if err != nil {
+		return db.UserProfile{}, err
+	}
+
+	return profile, nil
+
+}
+
+func (upm *userProfile) GetUserProfile(ctx context.Context, user_id string) (db.GetUserProfileRow, error) {
+
+	Id, err := uuid.Parse(user_id)
+
+	if err != nil {
+
+		err = errors.BadInput.Wrap(err, "invalid user_id").
+			WithProperty(errors.ErrorCode, 500)
+
+		log.Println("Invalid user id")
+		return db.GetUserProfileRow{}, err
+	}
+
+	// calling module
+	profile, err := upm.userStorageProfile.GetUserProfile(ctx, Id)
+
+	if err != nil {
+
+		return db.GetUserProfileRow{}, err
+	}
+
+	return profile, nil
+
+}

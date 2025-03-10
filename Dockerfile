@@ -42,3 +42,7 @@ EXPOSE 8000
 
 # Run the binary file as entrypoint
 ENTRYPOINT ["./app_bin"]
+
+    
+
+

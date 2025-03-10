@@ -15,7 +15,7 @@ func InitAuthRoute(rg *gin.RouterGroup, handler handler.Auth) {
 		{
 
 			Method: http.MethodPost,
-			Path:   "user",
+			Path:   "/user",
 			Middlewares: []gin.HandlerFunc{
 				middleware.ErrorMiddleWare(),
 			},
@@ -25,9 +25,9 @@ func InitAuthRoute(rg *gin.RouterGroup, handler handler.Auth) {
 		{
 
 			Method: http.MethodPost,
-			Path:   "signin",
+			Path:   "/signin",
 			Middlewares: []gin.HandlerFunc{
-				middleware.AuthMiddleware(),
+				// middleware.AuthMiddleware(),
 				middleware.ErrorMiddleWare(),
 			},
 			Handler: handler.SignIn,

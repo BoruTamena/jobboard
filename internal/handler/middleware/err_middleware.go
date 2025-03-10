@@ -23,7 +23,10 @@ func ErrorMiddleWare() gin.HandlerFunc {
 
 					StatusCode, _ := code.(int)
 
-					c.AbortWithStatusJSON(StatusCode, gin.H{"err": err.Error()})
+					c.AbortWithStatusJSON(StatusCode, gin.H{"err": err,
+						"message": err.Error()})
+
+					return
 
 				}
 

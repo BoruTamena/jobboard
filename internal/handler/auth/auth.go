@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -77,15 +78,18 @@ func (ath *authHandler) SignIn(ctx *gin.Context) {
 
 	if err := ctx.Bind(&UserLg); err != nil {
 
-		err = errors.BadInput.Wrap(err, "bind error").
+		err = errors.BadInput.Wrap(err, "user bind error").
 			WithProperty(errors.ErrorCode, 400)
 
 		log.Println("user bind error:-", err.Error())
+
+		ctx.Error(err)
 
 		return
 
 	}
 
+	fmt.Println("calling auth module signin")
 	err, userLg := ath.authModule.SignIn(ctx, UserLg)
 
 	if err != nil {
