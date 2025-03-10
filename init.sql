@@ -1,0 +1,4 @@
+
+CREATE DATABASE job_board;
+CREATE USER  jb_user;
+GRANT ALL PRIVILEGES ON DATABASE job_board TO jb_user;

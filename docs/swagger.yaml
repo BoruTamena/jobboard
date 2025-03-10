@@ -1,0 +1,114 @@
+definitions:
+  dto.UserDto:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      user_name:
+        type: string
+    type: object
+  dto.UserLogin:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  dto.UserProfie:
+    properties:
+      bio:
+        type: string
+      location:
+        type: string
+      skills:
+        items:
+          type: string
+        type: array
+    type: object
+  response.Response:
+    properties:
+      data: {}
+      status:
+        type: string
+    type: object
+info:
+  contact:
+    name: Boru Tamene Yadeta
+    url: https://github.com/BoruTamena
+  description: This is a  Swagger API documentation for JobBoard Open source Project.
+  title: JobBoard
+  version: 1.0.0
+paths:
+  /signin:
+    post:
+      consumes:
+      - application/json
+      description: user login
+      parameters:
+      - description: user login request body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserLogin'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: login to the system
+      tags:
+      - auth
+  /user:
+    post:
+      consumes:
+      - application/json
+      description: create new user on boardapi
+      parameters:
+      - description: user request body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: create new user
+      tags:
+      - auth
+  /user/{id}/profile:
+    post:
+      consumes:
+      - application/json
+      description: create profile
+      parameters:
+      - description: 'user id '
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: user profile request body
+        in: body
+        name: profile
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserProfie'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: create new user
+      tags:
+      - user
+swagger: "2.0"

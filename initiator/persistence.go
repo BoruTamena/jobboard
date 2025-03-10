@@ -1,15 +1,23 @@
 package initiator
 
+import (
+	"github.com/BoruTamena/jobboard/internal/constant/persistencedb"
+	"github.com/BoruTamena/jobboard/internal/storage"
+	"github.com/BoruTamena/jobboard/internal/storage/auth"
+	"github.com/BoruTamena/jobboard/internal/storage/user"
+)
+
 type Persistance struct {
-
-	/*
-	 All you persistence layer goes here
-
-	 user storage.User
-	 ...
-
-
-	*/
+	authStorage    storage.AuthStorage
+	profileStorage storage.UserProfie
 }
 
-func InitPersistence(arg any) Persistance
+func InitPersistence(db persistencedb.PersistenceDb) Persistance {
+
+	return Persistance{
+
+		authStorage:    auth.NewAuthStorage(db),
+		profileStorage: user.NewUserProfileStorage(db),
+	}
+
+}

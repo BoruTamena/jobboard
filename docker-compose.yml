@@ -2,7 +2,9 @@
 services:
   app:
     container_name: app_container 
-    build: .
+    build: 
+      context: backend
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     networks:
@@ -10,13 +12,14 @@ services:
     volumes:
       - ./docs:/app/docs  
     depends_on:
-      - p_sql
+      - psql_db
 
   swagger-ui:
     image: swaggerapi/swagger-ui
     container_name: swagger_ui_container
     ports:
       - "8080:8080"
+    
     volumes:
       - ./docs:/usr/share/nginx/html/docs 
     environment:
@@ -24,7 +27,7 @@ services:
     depends_on:
       - app
 
-  p_sql:
+  psql_db:
     container_name: psql_db
     image: postgres
     volumes:
@@ -34,7 +37,7 @@ services:
     ports:
       - "5430:5432"
     networks:
-      - jobboard_network_
+      - jobboard_network
 
     environment:
         POSTGRES_PASSWORD: password
