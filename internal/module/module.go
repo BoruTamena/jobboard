@@ -11,7 +11,8 @@ import (
 
 type AuthModule interface {
 	RegisterUser(ctx context.Context, user dto.UserDto) (error, dto.UserDto)
-	SignIn(ctx context.Context, userlg dto.UserLogin) (error, db.User)
+
+	SignIn(ctx context.Context, userlg dto.UserLogin) (error, map[string]interface{})
 }
 
 type UserProfile interface {

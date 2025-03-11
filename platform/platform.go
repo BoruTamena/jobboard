@@ -1,12 +1,8 @@
 package platform
 
-// define your platform interfaces here
+import "context"
 
-type SMS interface {
-	// SMS Interface
-}
-
-type SSO interface {
-
-	// SSO interface
+type RedisCache interface {
+	AddValue(ctx context.Context, key string, value interface{}, exp int64) error
+	GetValue(ctx context.Context, key string) (interface{}, error)
 }

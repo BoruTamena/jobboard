@@ -4,6 +4,7 @@ type Config struct {
 	Db        DbConfig  `mapstructure:"database"`
 	Server    Server    `mapstructure:"server"`
 	Migration Migration `mapstucture:"migration"`
+	Redis     Server    `mapstucture:"redis"`
 }
 
 type DbConfig struct {

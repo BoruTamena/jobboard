@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/BoruTamena/jobboard/helper"
 	"github.com/BoruTamena/jobboard/internal/constant/errors"
 	"github.com/BoruTamena/jobboard/internal/constant/models/dto"
 	"github.com/BoruTamena/jobboard/internal/constant/models/response"
@@ -99,20 +98,9 @@ func (ath *authHandler) SignIn(ctx *gin.Context) {
 		return
 	}
 
-	access_token, refresh_token, err := helper.CreateToken(userLg)
-
-	if err != nil {
-
-		ctx.Error(err)
-		return
-	}
-
 	ctx.JSON(http.StatusCreated, response.Response{
 		Status: string(response.Sucess),
-		Data: map[string]string{
-			"access_token":  access_token,
-			"refresh_token": refresh_token,
-		},
+		Data:   userLg,
 	})
 
 }

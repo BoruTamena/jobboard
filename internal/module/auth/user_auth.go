@@ -3,23 +3,26 @@ package auth
 import (
 	"context"
 	"log"
+	"time"
 
 	"github.com/BoruTamena/jobboard/helper"
 	"github.com/BoruTamena/jobboard/internal/constant/errors"
-	"github.com/BoruTamena/jobboard/internal/constant/models/db"
 	"github.com/BoruTamena/jobboard/internal/constant/models/dto"
 	"github.com/BoruTamena/jobboard/internal/module"
 	"github.com/BoruTamena/jobboard/internal/storage"
+	"github.com/BoruTamena/jobboard/platform"
 )
 
 type authModule struct {
-	authStorage storage.AuthStorage
+	authStorage   storage.AuthStorage
+	cachePlatform platform.RedisCache
 }
 
-func NewAuthModule(astorage storage.AuthStorage) module.AuthModule {
+func NewAuthModule(astorage storage.AuthStorage, cache platform.RedisCache) module.AuthModule {
 
 	return &authModule{
-		authStorage: astorage,
+		authStorage:   astorage,
+		cachePlatform: cache,
 	}
 
 }
@@ -54,7 +57,7 @@ func (atmd *authModule) RegisterUser(ctx context.Context, user dto.UserDto) (err
 	}
 }
 
-func (atmd *authModule) SignIn(ctx context.Context, userlg dto.UserLogin) (error, db.User) {
+func (atmd *authModule) SignIn(ctx context.Context, userlg dto.UserLogin) (error, map[string]interface{}) {
 
 	if err := userlg.Validate(); err != nil {
 
@@ -63,7 +66,7 @@ func (atmd *authModule) SignIn(ctx context.Context, userlg dto.UserLogin) (error
 
 		log.Println("bad user login input :-", err.Error())
 
-		return err, db.User{}
+		return err, map[string]interface{}{}
 	}
 
 	err, user := atmd.authStorage.GetUserByEmail(ctx, userlg)
@@ -76,8 +79,32 @@ func (atmd *authModule) SignIn(ctx context.Context, userlg dto.UserLogin) (error
 
 		log.Println("invalid credential while login :-", err.Error())
 
-		return err, db.User{}
+		return err, map[string]interface{}{}
 
 	}
-	return nil, user
+
+	exp := time.Now().Add(helper.AccessTokenExpireDuration).Unix()
+	access_token, refresh_token, err := helper.CreateToken(user)
+
+	if err != nil {
+		err = errors.AuthErr.Wrap(err, "can't generate auth token ").
+			WithProperty(errors.ErrorCode, 401)
+
+		log.Println("can't generate token")
+
+		return err, map[string]interface{}{}
+	}
+
+	key := "refreshtoken:" + access_token
+
+	// adding refresh token to redis cache
+	if err := atmd.cachePlatform.AddValue(ctx, key, "valid", exp); err != nil {
+		return err, map[string]interface{}{}
+
+	}
+
+	return nil, map[string]interface{}{
+		"access_token":  access_token,
+		"refresh_token": refresh_token,
+	}
 }

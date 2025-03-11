@@ -40,9 +40,14 @@ func Init() {
 
 	persistence := InitPersistence(pdb)
 
+	// initalizing platform
+
+	log.Println("initalizing redis cache")
+	platform := InitPlatform(*config)
+
 	log.Println("initalizing module")
 	// Initalizing Module
-	md := InitModule(persistence)
+	md := InitModule(persistence, platform)
 	// Initalizing Handler
 	handler := InitHandler(md)
 

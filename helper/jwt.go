@@ -13,8 +13,8 @@ import (
 )
 
 const (
-	accessTokenExpireDuration  = time.Minute * 15
-	refreshTokenExpireDuration = time.Hour * 24 * 7 // for 7days or 1 week
+	AccessTokenExpireDuration  = time.Minute * 15
+	RefreshTokenExpireDuration = time.Hour * 24 * 7 // for 7days or 1 week
 )
 
 func UserMarshal(userClaim db.User) (string, error) {
@@ -44,13 +44,13 @@ func CreateToken(userClaim db.User) (string, string, error) {
 	// Creating access token
 	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub": user_claim,
-		"exp": time.Now().Add(accessTokenExpireDuration).Unix(),
+		"exp": time.Now().Add(AccessTokenExpireDuration).Unix(),
 	})
 
 	// Creating refresh token
 	refreshToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub": user_claim,
-		"exp": time.Now().Add(refreshTokenExpireDuration).Unix(),
+		"exp": time.Now().Add(RefreshTokenExpireDuration).Unix(),
 	})
 
 	// Signing tokens
@@ -77,7 +77,7 @@ func GenerateToken(user db.User) (string, error) {
 
 	claims := jwt.MapClaims{
 		"sub": _user,
-		"exp": time.Now().Add(accessTokenExpireDuration).Unix(),
+		"exp": time.Now().Add(AccessTokenExpireDuration).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(os.Getenv("SCERATEKEY")))

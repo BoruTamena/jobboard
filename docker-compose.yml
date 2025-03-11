@@ -41,6 +41,15 @@ services:
 
     environment:
         POSTGRES_PASSWORD: password
+
+  redis:
+    container_name: redis_container 
+    image: redis
+    ports:
+      - 7979:6379
+    networks:
+      - jobboard_network
+
     
 networks:
   jobboard_network:
