@@ -7,11 +7,14 @@ import (
 	"github.com/BoruTamena/jobboard/internal/constant/models/dto"
 )
 
-// define module interface here
+type AuthzModule interface {
+	CheckUserPermission(user, resource, act string) bool
+	AddRoleForUser(ctx context.Context, user, role string) error
+	AddPolicy(ctx context.Context, role, obj, act string) error
+}
 
 type AuthModule interface {
 	RegisterUser(ctx context.Context, user dto.UserDto) (error, dto.UserDto)
-
 	SignIn(ctx context.Context, userlg dto.UserLogin) (error, map[string]interface{})
 }
 

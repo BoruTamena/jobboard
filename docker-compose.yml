@@ -1,9 +1,80 @@
 
+# services:
+#   app:
+#     container_name: app_container 
+#     build: 
+#       context: .
+#       dockerfile: Dockerfile
+#     ports:
+#       - "8000:8000"
+#     networks:
+#       - jobboard_network
+#     volumes:
+#       - ./docs:/app/docs  
+
+#     depends_on:
+#       - psql_db
+  
+
+
+#   swagger-ui:
+#     image: swaggerapi/swagger-ui
+#     container_name: swagger_ui_container
+#     ports:
+#       - "8080:8080"
+#     volumes:
+#       - ./docs:/usr/share/nginx/html/docs 
+#     environment:
+#       API_URL: /docs/swagger.yaml 
+#     depends_on:
+#       - app
+
+#   psql_db:
+#     container_name: psql_db
+#     image: postgres
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data
+#       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    
+#     ports:
+#       - "5430:5432"
+
+#     networks:
+#       - jobboard_network
+
+#     environment:
+#         POSTGRES_PASSWORD: password
+#     healthcheck:
+#       test: ["CMD", "pg_isready", "-U", "postgres", "-d", "job_board"]
+#       interval: 10s
+#       retries: 5
+#       start_period: 30s
+#       timeout: 10s
+
+#   redis:
+#     container_name: redis_container 
+#     image: redis
+#     ports:
+#       - 7979:6379
+#     networks:
+#       - jobboard_network
+
+    
+# networks:
+#   jobboard_network:
+#     driver: bridge
+   
+# volumes:
+
+#   postgres_data:
+#      driver: local
+
+
 services:
   app:
     container_name: app_container 
     build: 
-      context: backend
+      context: .
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
@@ -11,15 +82,22 @@ services:
       - jobboard_network
     volumes:
       - ./docs:/app/docs  
+
     depends_on:
       - psql_db
+  
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8000/health"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
 
   swagger-ui:
     image: swaggerapi/swagger-ui
     container_name: swagger_ui_container
     ports:
       - "8080:8080"
-    
     volumes:
       - ./docs:/usr/share/nginx/html/docs 
     environment:
@@ -36,11 +114,19 @@ services:
     
     ports:
       - "5430:5432"
+
     networks:
       - jobboard_network
 
     environment:
-        POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: password
+
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "job_board"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
 
   redis:
     container_name: redis_container 
@@ -50,12 +136,10 @@ services:
     networks:
       - jobboard_network
 
-    
 networks:
   jobboard_network:
     driver: bridge
    
 volumes:
-
   postgres_data:
      driver: local

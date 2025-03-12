@@ -8,7 +8,11 @@ import (
 	"github.com/google/uuid"
 )
 
-// define U storage interface here
+type AuthzStorage interface {
+	AddRole(user string, role string) error
+	AddPolicy(role, obj, act string) error
+	CheckPermision(sub, resource, act string) (bool, error)
+}
 
 type AuthStorage interface {
 	CreateUser(ctx context.Context, user dto.UserDto) (error, db.User)

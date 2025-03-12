@@ -8,11 +8,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Initiate
 // @title JobBoard
 // @version 1.0.0
 // @description This is a  Swagger API documentation for JobBoard Open source Project.
 // @contact.name Boru Tamene Yadeta
 // @contact.url  https://github.com/BoruTamena
+// @BasePath /v1
+// @securityDefinition.apikey BearerAuth
+// @in header
+// @name Authorization
+// @securtiyDefinition.basic BasicAuth
 func Init() {
 
 	log.Println("Initalizing config file")
@@ -51,7 +57,7 @@ func Init() {
 	// Initalizing Handler
 	handler := InitHandler(md)
 
-	InitRouting(rg, handler)
+	InitRouting(rg, handler, md)
 
 	server := http.Server{
 

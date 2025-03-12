@@ -12,6 +12,7 @@ import (
 func InitRouting(
 	rg *gin.RouterGroup,
 	handler Handler,
+	module Module,
 ) {
 
 	docs.SwaggerInfo.Schemes = []string{"http"}
@@ -21,7 +22,6 @@ func InitRouting(
 	rg.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFile.Handler))
 	// intializing auth route
 	authroute.InitAuthRoute(rg, handler.authHandler)
-
 	// initializign userprofile route
 	userroute.InitUserProfileRouter(rg, handler.userProfileHandler)
 

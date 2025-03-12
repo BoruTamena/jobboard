@@ -1,3 +1,4 @@
+basePath: /v1
 definitions:
   dto.UserDto:
     properties:
@@ -61,7 +62,7 @@ paths:
             $ref: '#/definitions/response.Response'
       summary: login to the system
       tags:
-      - auth
+      - user
   /user:
     post:
       consumes:
@@ -83,7 +84,7 @@ paths:
             $ref: '#/definitions/response.Response'
       summary: create new user
       tags:
-      - auth
+      - user
   /user/{id}/profile:
     get:
       consumes:
@@ -104,7 +105,7 @@ paths:
             $ref: '#/definitions/response.Response'
       summary: get users
       tags:
-      - user
+      - profile
     post:
       consumes:
       - application/json
@@ -130,7 +131,7 @@ paths:
             $ref: '#/definitions/response.Response'
       summary: create new user
       tags:
-      - user
+      - profile
     put:
       consumes:
       - application/json
@@ -156,5 +157,5 @@ paths:
             $ref: '#/definitions/response.Response'
       summary: get users
       tags:
-      - user
+      - profile
 swagger: "2.0"

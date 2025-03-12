@@ -39,21 +39,20 @@ func AuthMiddleware() gin.HandlerFunc {
 		claim, err := p_token.Claims.GetSubject()
 
 		if err != nil {
-			//error
 			ctx.Error(err)
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"msg": "unauthorized"})
 			return
 		}
 
+		// unmarshall the claim
 		if err := json.Unmarshal([]byte(claim), &user); err != nil {
-			// err
 			ctx.Error(err)
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"msg": "unauthorized"})
 			return
 		}
 
-		ctx.Set("user", user)
-
+		ctx.Set("user", user.Email)
+		ctx.Set("resource", ctx.Request.Method)
 		// allow
 		ctx.Next()
 

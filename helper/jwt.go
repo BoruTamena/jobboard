@@ -92,7 +92,7 @@ func RefreshAccessToken(refreshToken string) (string, error) {
 		return "", err
 	}
 
-	// Extract user ID from refresh token
+	// Extract user  from refresh token
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !ok {
 		return "", fmt.Errorf("invalid refresh token claims")

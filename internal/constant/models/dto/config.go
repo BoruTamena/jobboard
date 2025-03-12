@@ -5,6 +5,7 @@ type Config struct {
 	Server    Server    `mapstructure:"server"`
 	Migration Migration `mapstucture:"migration"`
 	Redis     Server    `mapstucture:"redis"`
+	Authz     Authz     `mapstucture:"authz"`
 }
 
 type DbConfig struct {
@@ -20,4 +21,9 @@ type Server struct {
 
 type Migration struct {
 	Path string `mapstructure:"path"`
+}
+
+type Authz struct {
+	Model   string `mapstructure:"model"`
+	Adapter string `mapstructure:"adapter"`
 }

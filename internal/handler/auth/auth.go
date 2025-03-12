@@ -24,7 +24,7 @@ func AuthHandler(authmodule module.AuthModule) handler.Auth {
 }
 
 // @Summary create new user
-// @Tags auth
+// @Tags user
 // @Description create new user on boardapi
 // @Accept json
 // @Produce json
@@ -64,7 +64,7 @@ func (ath *authHandler) RegisterUser(ctx *gin.Context) {
 }
 
 // @Summary login to the system
-// @Tags auth
+// @Tags user
 // @Description user login
 // @Accept json
 // @Produce json

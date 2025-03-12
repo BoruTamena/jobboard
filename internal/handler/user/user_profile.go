@@ -25,7 +25,7 @@ func InitUserProfileHandler(umd module.UserProfile) handler.UserProfile {
 }
 
 // @Summary create new user
-// @Tags user
+// @Tags profile
 // @Description create profile
 // @Accept json
 // @Produce json
@@ -66,7 +66,7 @@ func (up *userProfile) CreateUserProfile(ctx *gin.Context) {
 }
 
 // @Summary get users
-// @Tags user
+// @Tags profile
 // @Description create profile
 // @Accept json
 // @Produce json
@@ -119,7 +119,7 @@ func (up *userProfile) UpdateUserProfile(ctx *gin.Context) {
 }
 
 // @Summary get users
-// @Tags user
+// @Tags profile
 // @Description create profile
 // @Accept json
 // @Produce json
