@@ -1,3 +1,4 @@
+basePath: /v1
 definitions:
   dto.UserDto:
     properties:
@@ -36,7 +37,7 @@ info:
   contact:
     name: Boru Tamene Yadeta
     url: https://github.com/BoruTamena
-  description: This is a  Swagger API documentation for JobBoard Open source Project.
+  description: Basic authentication using username and password
   title: JobBoard
   version: 1.0.0
 paths:
@@ -61,7 +62,7 @@ paths:
             $ref: '#/definitions/response.Response'
       summary: login to the system
       tags:
-      - auth
+      - user
   /user:
     post:
       consumes:
@@ -83,7 +84,7 @@ paths:
             $ref: '#/definitions/response.Response'
       summary: create new user
       tags:
-      - auth
+      - user
   /user/{id}/profile:
     get:
       consumes:
@@ -102,9 +103,11 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
       summary: get users
       tags:
-      - user
+      - profile
     post:
       consumes:
       - application/json
@@ -128,9 +131,11 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
       summary: create new user
       tags:
-      - user
+      - profile
     put:
       consumes:
       - application/json
@@ -154,7 +159,19 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
       summary: get users
       tags:
-      - user
+      - profile
+schemes:
+- http
+securityDefinitions:
+  BasicAuth:
+    type: basic
+  BearerAuth:
+    description: Type "Bearer {your_token}" to authenticate
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

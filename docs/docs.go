@@ -28,7 +28,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "auth"
+                    "user"
                 ],
                 "summary": "login to the system",
                 "parameters": [
@@ -62,7 +62,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "auth"
+                    "user"
                 ],
                 "summary": "create new user",
                 "parameters": [
@@ -88,6 +88,11 @@ const docTemplate = `{
         },
         "/user/{id}/profile": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "create profile",
                 "consumes": [
                     "application/json"
@@ -96,7 +101,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "profile"
                 ],
                 "summary": "get users",
                 "parameters": [
@@ -118,6 +123,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "create profile",
                 "consumes": [
                     "application/json"
@@ -126,7 +136,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "profile"
                 ],
                 "summary": "get users",
                 "parameters": [
@@ -157,6 +167,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "create profile",
                 "consumes": [
                     "application/json"
@@ -165,7 +180,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "profile"
                 ],
                 "summary": "create new user",
                 "parameters": [
@@ -249,6 +264,17 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        },
+        "BearerAuth": {
+            "description": "Type \"Bearer {your_token}\" to authenticate",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
@@ -256,10 +282,10 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0.0",
 	Host:             "",
-	BasePath:         "",
-	Schemes:          []string{},
+	BasePath:         "/v1",
+	Schemes:          []string{"http"},
 	Title:            "JobBoard",
-	Description:      "This is a  Swagger API documentation for JobBoard Open source Project.",
+	Description:      "Basic authentication using username and password",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

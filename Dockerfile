@@ -36,6 +36,9 @@ RUN apk --no-cache add ca-certificates
 # copy binary file from build stage
 COPY --from=buildstage /build/app_bin .
 COPY --from=buildstage app/config/config.yaml  config/config.yaml
+# Copy migration files from build stage
+COPY --from=buildstage /app/internal/constant/query/schemas /internal/constant/query/schemas
+
 COPY --from=buildstage /app/docs  /docs
 
 EXPOSE 8000

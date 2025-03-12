@@ -6,10 +6,11 @@ import (
 	"github.com/BoruTamena/jobboard/internal/glue/routing"
 	"github.com/BoruTamena/jobboard/internal/handler"
 	"github.com/BoruTamena/jobboard/internal/handler/middleware"
+	"github.com/BoruTamena/jobboard/internal/module"
 	"github.com/gin-gonic/gin"
 )
 
-func InitUserProfileRouter(rg *gin.RouterGroup, handler handler.UserProfile) {
+func InitUserProfileRouter(rg *gin.RouterGroup, handler handler.UserProfile, md module.AuthzModule) {
 
 	routes := []routing.Router{
 		{
@@ -18,6 +19,7 @@ func InitUserProfileRouter(rg *gin.RouterGroup, handler handler.UserProfile) {
 			Middlewares: []gin.HandlerFunc{
 				middleware.ErrorMiddleWare(),
 				middleware.AuthMiddleware(),
+				middleware.Authorize(md),
 			},
 			Handler: handler.CreateUserProfile,
 		},
@@ -28,6 +30,7 @@ func InitUserProfileRouter(rg *gin.RouterGroup, handler handler.UserProfile) {
 			Middlewares: []gin.HandlerFunc{
 				middleware.ErrorMiddleWare(),
 				middleware.AuthMiddleware(),
+				middleware.Authorize(md),
 			},
 			Handler: handler.UpdateUserProfile,
 		},
@@ -38,6 +41,7 @@ func InitUserProfileRouter(rg *gin.RouterGroup, handler handler.UserProfile) {
 			Middlewares: []gin.HandlerFunc{
 				middleware.ErrorMiddleWare(),
 				middleware.AuthMiddleware(),
+				middleware.Authorize(md),
 			},
 			Handler: handler.GetUserProfile,
 		},

@@ -25,7 +25,7 @@ func InitUserProfileHandler(umd module.UserProfile) handler.UserProfile {
 }
 
 // @Summary create new user
-// @Tags user
+// @Tags profile
 // @Description create profile
 // @Accept json
 // @Produce json
@@ -33,6 +33,7 @@ func InitUserProfileHandler(umd module.UserProfile) handler.UserProfile {
 // @Param profile body  dto.UserProfie true "user profile request body"
 // @Success 201 {object} response.Response
 // @Router /user/{id}/profile [post]
+// @security BearerAuth
 func (up *userProfile) CreateUserProfile(ctx *gin.Context) {
 
 	var userProfile dto.UserProfie
@@ -66,7 +67,7 @@ func (up *userProfile) CreateUserProfile(ctx *gin.Context) {
 }
 
 // @Summary get users
-// @Tags user
+// @Tags profile
 // @Description create profile
 // @Accept json
 // @Produce json
@@ -74,6 +75,7 @@ func (up *userProfile) CreateUserProfile(ctx *gin.Context) {
 // @Param  body body dto.UserProfie true "user_id"
 // @Success 201 {object} response.Response
 // @Router /user/{id}/profile [put]
+// @security BearerAuth
 func (up *userProfile) UpdateUserProfile(ctx *gin.Context) {
 	var userProfile dto.UserProfie
 
@@ -119,13 +121,14 @@ func (up *userProfile) UpdateUserProfile(ctx *gin.Context) {
 }
 
 // @Summary get users
-// @Tags user
+// @Tags profile
 // @Description create profile
 // @Accept json
 // @Produce json
 // @Param id path string true "user_id"
 // @Success 200 {object} response.Response
 // @Router /user/{id}/profile [get]
+// @security BearerAuth
 func (up *userProfile) GetUserProfile(ctx *gin.Context) {
 
 	Id := ctx.Param("id")

@@ -1,7 +1,10 @@
 {
+    "schemes": [
+        "http"
+    ],
     "swagger": "2.0",
     "info": {
-        "description": "This is a  Swagger API documentation for JobBoard Open source Project.",
+        "description": "Basic authentication using username and password",
         "title": "JobBoard",
         "contact": {
             "name": "Boru Tamene Yadeta",
@@ -9,6 +12,7 @@
         },
         "version": "1.0.0"
     },
+    "basePath": "/v1",
     "paths": {
         "/signin": {
             "post": {
@@ -20,7 +24,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "auth"
+                    "user"
                 ],
                 "summary": "login to the system",
                 "parameters": [
@@ -54,7 +58,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "auth"
+                    "user"
                 ],
                 "summary": "create new user",
                 "parameters": [
@@ -80,6 +84,11 @@
         },
         "/user/{id}/profile": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "create profile",
                 "consumes": [
                     "application/json"
@@ -88,7 +97,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "profile"
                 ],
                 "summary": "get users",
                 "parameters": [
@@ -110,6 +119,11 @@
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "create profile",
                 "consumes": [
                     "application/json"
@@ -118,7 +132,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "profile"
                 ],
                 "summary": "get users",
                 "parameters": [
@@ -149,6 +163,11 @@
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "create profile",
                 "consumes": [
                     "application/json"
@@ -157,7 +176,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "profile"
                 ],
                 "summary": "create new user",
                 "parameters": [
@@ -240,6 +259,17 @@
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        },
+        "BearerAuth": {
+            "description": "Type \"Bearer {your_token}\" to authenticate",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }
