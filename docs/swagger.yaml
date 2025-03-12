@@ -37,7 +37,7 @@ info:
   contact:
     name: Boru Tamene Yadeta
     url: https://github.com/BoruTamena
-  description: This is a  Swagger API documentation for JobBoard Open source Project.
+  description: Basic authentication using username and password
   title: JobBoard
   version: 1.0.0
 paths:
@@ -103,6 +103,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
       summary: get users
       tags:
       - profile
@@ -129,6 +131,8 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
       summary: create new user
       tags:
       - profile
@@ -155,7 +159,19 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
       summary: get users
       tags:
       - profile
+schemes:
+- http
+securityDefinitions:
+  BasicAuth:
+    type: basic
+  BearerAuth:
+    description: Type "Bearer {your_token}" to authenticate
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

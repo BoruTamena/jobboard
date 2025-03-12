@@ -88,6 +88,11 @@ const docTemplate = `{
         },
         "/user/{id}/profile": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "create profile",
                 "consumes": [
                     "application/json"
@@ -118,6 +123,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "create profile",
                 "consumes": [
                     "application/json"
@@ -157,6 +167,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "create profile",
                 "consumes": [
                     "application/json"
@@ -249,6 +264,17 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        },
+        "BearerAuth": {
+            "description": "Type \"Bearer {your_token}\" to authenticate",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
     }
 }`
 
@@ -257,9 +283,9 @@ var SwaggerInfo = &swag.Spec{
 	Version:          "1.0.0",
 	Host:             "",
 	BasePath:         "/v1",
-	Schemes:          []string{},
+	Schemes:          []string{"http"},
 	Title:            "JobBoard",
-	Description:      "This is a  Swagger API documentation for JobBoard Open source Project.",
+	Description:      "Basic authentication using username and password",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

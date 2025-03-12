@@ -1,7 +1,10 @@
 {
+    "schemes": [
+        "http"
+    ],
     "swagger": "2.0",
     "info": {
-        "description": "This is a  Swagger API documentation for JobBoard Open source Project.",
+        "description": "Basic authentication using username and password",
         "title": "JobBoard",
         "contact": {
             "name": "Boru Tamene Yadeta",
@@ -81,6 +84,11 @@
         },
         "/user/{id}/profile": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "create profile",
                 "consumes": [
                     "application/json"
@@ -111,6 +119,11 @@
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "create profile",
                 "consumes": [
                     "application/json"
@@ -150,6 +163,11 @@
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "create profile",
                 "consumes": [
                     "application/json"
@@ -241,6 +259,17 @@
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        },
+        "BearerAuth": {
+            "description": "Type \"Bearer {your_token}\" to authenticate",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }

@@ -14,11 +14,18 @@ import (
 // @description This is a  Swagger API documentation for JobBoard Open source Project.
 // @contact.name Boru Tamene Yadeta
 // @contact.url  https://github.com/BoruTamena
+
 // @BasePath /v1
-// @securityDefinition.apikey BearerAuth
+
+// @securityDefinitions.apikey BearerAuth
 // @in header
 // @name Authorization
-// @securtiyDefinition.basic BasicAuth
+// @description Type "Bearer {your_token}" to authenticate
+
+// @securityDefinitions.basic BasicAuth
+// @description Basic authentication using username and password
+
+// @schemes http
 func Init() {
 
 	log.Println("Initalizing config file")
