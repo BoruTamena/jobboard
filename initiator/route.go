@@ -23,6 +23,6 @@ func InitRouting(
 	// intializing auth route
 	authroute.InitAuthRoute(rg, handler.authHandler)
 	// initializign userprofile route
-	userroute.InitUserProfileRouter(rg, handler.userProfileHandler)
+	userroute.InitUserProfileRouter(rg, handler.userProfileHandler, module.authzModule)
 
 }

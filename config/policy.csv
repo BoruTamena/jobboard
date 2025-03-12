@@ -5,4 +5,4 @@ p,user,profile,read
 p,user,profile,update
 
 g,user@gmail.com,user
-g,admin@gmail.com.admin
+g,admin@gmail.com,admin

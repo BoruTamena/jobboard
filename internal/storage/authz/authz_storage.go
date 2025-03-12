@@ -18,7 +18,7 @@ func InitAuthzStorage(cfg dto.Config) storage.AuthzStorage {
 	e, err := casbin.NewEnforcer(cfg.Authz.Model, cfg.Authz.Adapter)
 
 	if err != nil {
-		log.Fatal("failed to create a casbin enforcer")
+		log.Fatal("failed to create a casbin enforcer", err.Error())
 	}
 
 	return &authzStorage{

@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Authorize(obj string, act string, authz module.AuthzModule) gin.HandlerFunc {
+func Authorize(authz module.AuthzModule) gin.HandlerFunc {
 
 	return func(ctx *gin.Context) {
 

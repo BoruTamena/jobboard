@@ -51,7 +51,7 @@ func Init() {
 
 	pdb := persistencedb.NewPersistenceDb(con_pol)
 
-	persistence := InitPersistence(pdb)
+	persistence := InitPersistence(*config, pdb)
 
 	// initalizing platform
 
