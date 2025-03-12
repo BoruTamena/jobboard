@@ -1,0 +1,8 @@
+p,admin,profile,read
+p,admin,profile,delete
+p,user,profile,create
+p,user,profile,read
+p,user,profile,update
+
+g,user@gmail.com,user
+g,admin@gmail.com.admin
