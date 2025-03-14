@@ -51,12 +51,10 @@ func Init() {
 	pdb := persistencedb.NewPersistenceDb(*config)
 
 	persistence := InitPersistence(*config, pdb)
-
 	// initalizing platform
 
 	log.Println("initalizing redis cache")
 	platform := InitPlatform(*config)
-
 	log.Println("initalizing module")
 	// Initalizing Module
 	md := InitModule(persistence, platform)
