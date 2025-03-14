@@ -47,17 +47,14 @@ func Init() {
 	UpMigiration(mg)
 
 	// Init Persistence layer
-	con_pol := InitPgDb(*config)
-
-	pdb := persistencedb.NewPersistenceDb(con_pol)
+	// con_pol := InitPgDb(*config)
+	pdb := persistencedb.NewPersistenceDb(*config)
 
 	persistence := InitPersistence(*config, pdb)
-
 	// initalizing platform
 
 	log.Println("initalizing redis cache")
 	platform := InitPlatform(*config)
-
 	log.Println("initalizing module")
 	// Initalizing Module
 	md := InitModule(persistence, platform)

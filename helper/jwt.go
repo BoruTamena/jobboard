@@ -9,6 +9,7 @@ import (
 
 	"github.com/BoruTamena/jobboard/internal/constant/errors"
 	"github.com/BoruTamena/jobboard/internal/constant/models/db"
+
 	"github.com/golang-jwt/jwt/v5"
 )
 

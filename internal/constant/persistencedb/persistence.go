@@ -1,17 +1,23 @@
 package persistencedb
 
 import (
-	"github.com/BoruTamena/jobboard/internal/constant/models/db"
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/BoruTamena/jobboard/internal/constant/models/dto"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 type PersistenceDb struct {
-	*db.Queries
+	*gorm.DB
 }
 
-func NewPersistenceDb(pool *pgxpool.Pool) PersistenceDb {
+func NewPersistenceDb(config dto.Config) PersistenceDb {
 
+	g_db, err := gorm.Open(postgres.Open(config.Db.PgUrl), &gorm.Config{})
+
+	if err != nil {
+		panic(err)
+	}
 	return PersistenceDb{
-		Queries: db.New(pool),
+		g_db,
 	}
 }

@@ -51,8 +51,8 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		ctx.Set("user", user.Email)
-		ctx.Set("resource", ctx.Request.Method)
+		ctx.Set("user", "user@gamil.com")
+		ctx.Set("resource", strings.Split(ctx.Request.URL.Path, "/")[2])
 		// allow
 		ctx.Next()
 

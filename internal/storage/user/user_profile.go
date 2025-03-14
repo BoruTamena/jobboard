@@ -2,8 +2,6 @@ package user
 
 import (
 	"context"
-	"database/sql"
-	"log"
 
 	"github.com/BoruTamena/jobboard/internal/constant/errors"
 	"github.com/BoruTamena/jobboard/internal/constant/models/db"
@@ -30,62 +28,66 @@ func NewUserProfileStorage(persistencedb persistencedb.PersistenceDb) storage.Us
 
 func (userPStorage *userProfileStorage) CreateUserProfile(ctx context.Context, user_id uuid.UUID, userProfile dto.UserProfie) (db.UserProfile, error) {
 
-	profile, err := userPStorage.db.CreateProfile(ctx, db.CreateProfileParams{
-		UserID: user_id,
-		Bio: sql.NullString{
-			String: userProfile.Bio,
-			Valid:  true,
-		},
-		Location: sql.NullString{
-			String: userProfile.Location,
-			Valid:  true,
-		},
-	})
+	profile := db.UserProfile{
+		UserID:   user_id,
+		Bio:      userProfile.Bio,
+		Location: userProfile.Location,
+	}
 
-	if err != nil {
-		err = errors.WriteErr.Wrap(err, "db write op error").
+	res := userPStorage.db.WithContext(ctx).Create(&profile)
+
+	if err := res.Error; err != nil {
+
+		err = errors.WriteErr.Wrap(err, "error while createing profile").
 			WithProperty(errors.ErrorCode, 500)
 
 		return db.UserProfile{}, err
+
 	}
+
 	return profile, nil
+
 }
 
 func (userPStorage *userProfileStorage) UpdateUserProfile(ctx context.Context, user_id uuid.UUID, userProfile dto.UserProfie) (db.UserProfile, error) {
 
-	profile, err := userPStorage.db.UpdateProfile(ctx, db.UpdateProfileParams{
-		UserID: user_id,
-		Bio: sql.NullString{
-			String: userProfile.Bio,
-			Valid:  true,
-		},
-		Location: sql.NullString{
-			String: userProfile.Location,
-			Valid:  true,
-		},
-	})
+	var profile db.UserProfile
 
-	if err != nil {
-		err = errors.WriteErr.Wrap(err, "db write op error").
+	res := userPStorage.db.WithContext(ctx).Model(&profile).
+		Updates(map[string]interface{}{
+			"bio":      userProfile.Bio,
+			"location": userProfile.Location,
+		})
+
+	if err := res.Error; err != nil {
+
+		err := errors.WriteErr.Wrap(err, "error occur while updating user profile").
 			WithProperty(errors.ErrorCode, 500)
 
 		return db.UserProfile{}, err
+
 	}
+
 	return profile, nil
+
 }
 
-func (userPStorage *userProfileStorage) GetUserProfile(ctx context.Context, user_id uuid.UUID) (db.GetUserProfileRow, error) {
+func (userPStorage *userProfileStorage) GetUserProfile(ctx context.Context, user_id uuid.UUID) (db.User, error) {
 
-	profile, err := userPStorage.db.GetUserProfile(ctx, user_id)
+	var user db.User
+	res := userPStorage.db.WithContext(ctx).Preload("Profile").
+		Where(map[string]interface{}{"id": user_id}).
+		Find(&user)
 
-	if err != nil {
-		err = errors.DbReadErr.Wrap(err, "fetching user profile").
+	if err := res.Error; err != nil {
+
+		err := errors.DbReadErr.Wrap(err, "error while reading user").
 			WithProperty(errors.ErrorCode, 500)
 
-		log.Println("error occur while fetching user profile")
-		return db.GetUserProfileRow{}, err
+		return db.User{}, err
+
 	}
 
-	return profile, nil
+	return user, nil
 
 }

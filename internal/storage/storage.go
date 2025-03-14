@@ -22,5 +22,5 @@ type AuthStorage interface {
 type UserProfie interface {
 	CreateUserProfile(ctx context.Context, user_id uuid.UUID, userProfile dto.UserProfie) (db.UserProfile, error)
 	UpdateUserProfile(ctx context.Context, user_id uuid.UUID, userProfile dto.UserProfie) (db.UserProfile, error)
-	GetUserProfile(ctx context.Context, user_id uuid.UUID) (db.GetUserProfileRow, error)
+	GetUserProfile(ctx context.Context, user_id uuid.UUID) (db.User, error)
 }
