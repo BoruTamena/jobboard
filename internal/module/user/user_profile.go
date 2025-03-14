@@ -92,7 +92,7 @@ func (upm *userProfile) UpdateUserProfile(ctx context.Context, user_id string, u
 
 }
 
-func (upm *userProfile) GetUserProfile(ctx context.Context, user_id string) (db.GetUserProfileRow, error) {
+func (upm *userProfile) GetUserProfile(ctx context.Context, user_id string) (db.User, error) {
 
 	Id, err := uuid.Parse(user_id)
 
@@ -102,7 +102,7 @@ func (upm *userProfile) GetUserProfile(ctx context.Context, user_id string) (db.
 			WithProperty(errors.ErrorCode, 500)
 
 		log.Println("Invalid user id")
-		return db.GetUserProfileRow{}, err
+		return db.User{}, err
 	}
 
 	// calling module
@@ -110,7 +110,7 @@ func (upm *userProfile) GetUserProfile(ctx context.Context, user_id string) (db.
 
 	if err != nil {
 
-		return db.GetUserProfileRow{}, err
+		return db.User{}, err
 	}
 
 	return profile, nil

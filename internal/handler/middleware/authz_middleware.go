@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/BoruTamena/jobboard/internal/constant/models/response"
@@ -19,6 +20,7 @@ func Authorize(authz module.AuthzModule) gin.HandlerFunc {
 
 		// checking if user is allowed to take action
 
+		log.Println("user", user, "resource", resource, "action", action)
 		permission := authz.CheckUserPermission(user, resource, action)
 
 		if !permission {
