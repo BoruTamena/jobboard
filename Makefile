@@ -5,7 +5,7 @@ migrate-down:
 migrate-up:
 	- migrate -database $(db_url) -path $(path) -verbose up
 migrate-create:
-	- migrate create -ext sql -dir internal/constant/query/schemas -tz "UTC" $(args)
+	- migrate create -ext sql -dir internal/constant/query/schemas -tz "UTC" $(table)
 swagger:
 	- swag init -g initiator/initiator.go
 tests:

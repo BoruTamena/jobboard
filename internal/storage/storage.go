@@ -24,3 +24,9 @@ type UserProfie interface {
 	UpdateUserProfile(ctx context.Context, user_id uuid.UUID, userProfile dto.UserProfie) (db.UserProfile, error)
 	GetUserProfile(ctx context.Context, user_id uuid.UUID) (db.User, error)
 }
+
+type JobStorage interface {
+	CreateJob(ctx context.Context, job dto.JobDto) (error, dto.JobDto)
+	GetJobs(ctx context.Context, limit, offset int) (error, []dto.JobDto)
+	GetJobCategories(ctx context.Context) (error, []dto.JobCategoryDto)
+}
