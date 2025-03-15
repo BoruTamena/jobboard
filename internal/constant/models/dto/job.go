@@ -28,7 +28,26 @@ func (j JobDto) Validate() error {
 
 // jobcategory
 type JobCategoryDto struct {
-	ID           uuid.UUID `json:"id"`
+	ID           uuid.UUID `json:"id ,omitempty"`
 	CategoryName string    `json:"name"`
 	Description  string    `json:"description"`
+}
+
+func (j JobCategoryDto) Validate() error {
+	return validation.ValidateStruct(&j,
+		validation.Field(&j.CategoryName, validation.Required),
+		validation.Field(&j.Description, validation.Required),
+	)
+}
+
+// job status update dto
+type JobStatusDto struct {
+	JobId  uuid.UUID `json:"job_id,omitempty"`
+	Status string    `json:"status"`
+}
+
+func (j JobStatusDto) Validate() error {
+	return validation.ValidateStruct(&j,
+		validation.Field(&j.Status, validation.Required),
+	)
 }

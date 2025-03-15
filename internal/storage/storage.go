@@ -28,5 +28,11 @@ type UserProfie interface {
 type JobStorage interface {
 	CreateJob(ctx context.Context, job dto.JobDto) (error, dto.JobDto)
 	GetJobs(ctx context.Context, limit, offset int) (error, []dto.JobDto)
+	CreateJobCategory(ctx context.Context, jobCategory dto.JobCategoryDto) (error, dto.JobCategoryDto)
 	GetJobCategories(ctx context.Context) (error, []dto.JobCategoryDto)
+	UpdateJobStatus(ctx context.Context, jobStatus dto.JobStatusDto) (error, dto.JobDto)
+}
+
+type JobApplicationStorage interface {
+	CreateJobApplication(ctx context.Context, jbApplication dto.AppilicationDto) (error, dto.AppilicationDto)
 }

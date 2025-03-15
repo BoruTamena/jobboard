@@ -1,5 +1,51 @@
 basePath: /v1
 definitions:
+  dto.AppilicationDto:
+    properties:
+      cover_letter:
+        type: string
+      jobID:
+        type: string
+      resume_url:
+        type: string
+      status:
+        description: pending  accepted rejected
+        type: string
+      userID:
+        description: define your application struct here
+        type: string
+    type: object
+  dto.JobCategoryDto:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  dto.JobDto:
+    properties:
+      category_id:
+        type: string
+      job_description:
+        type: string
+      job_title:
+        type: string
+      job_type:
+        type: string
+      location:
+        type: string
+      status:
+        type: string
+    type: object
+  dto.JobStatusDto:
+    properties:
+      job_id:
+        type: string
+      status:
+        type: string
+    type: object
   dto.UserDto:
     properties:
       email:
@@ -41,6 +87,148 @@ info:
   title: JobBoard
   version: 1.0.0
 paths:
+  /job:
+    get:
+      consumes:
+      - application/json
+      description: Get a job
+      parameters:
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
+      summary: Get a job
+      tags:
+      - Job
+    post:
+      consumes:
+      - application/json
+      description: Create a job
+      parameters:
+      - description: job request body
+        in: body
+        name: job
+        required: true
+        schema:
+          $ref: '#/definitions/dto.JobDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
+      summary: Create a job
+      tags:
+      - Job
+  /job/{id}/status:
+    patch:
+      consumes:
+      - application/json
+      description: update job status
+      parameters:
+      - description: job id is required
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: job status is required
+        in: body
+        name: jobStatus
+        required: true
+        schema:
+          $ref: '#/definitions/dto.JobStatusDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
+      summary: update job status
+      tags:
+      - Job
+  /job/apply:
+    post:
+      consumes:
+      - application/json
+      description: job application
+      parameters:
+      - description: job application body is required
+        in: body
+        name: jobapplication
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AppilicationDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
+      summary: apply for job
+      tags:
+      - application
+  /job/category:
+    get:
+      consumes:
+      - application/json
+      description: Get a job category
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
+      summary: Get a job category
+      tags:
+      - Job
+    post:
+      consumes:
+      - application/json
+      description: Create a job category
+      parameters:
+      - description: job category request body
+        in: body
+        name: job
+        required: true
+        schema:
+          $ref: '#/definitions/dto.JobCategoryDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - BearerAuth: []
+      summary: Create a job category
+      tags:
+      - Job
   /signin:
     post:
       consumes:

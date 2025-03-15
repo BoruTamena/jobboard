@@ -18,5 +18,10 @@ type UserProfile interface {
 type Job interface {
 	CreateJob(ctx *gin.Context)
 	GetJob(ctx *gin.Context)
+	CreateJobCategory(ctx *gin.Context)
 	GetJobCategory(ctx *gin.Context)
+	UpdateJobStatus(ctx *gin.Context)
+}
+
+type JobApplicationHandler interface {
 }

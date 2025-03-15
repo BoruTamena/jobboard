@@ -76,6 +76,27 @@ func (js *jobStorage) GetJobs(ctx context.Context, limit, offset int) (error, []
 	return nil, job_dtos
 }
 
+func (js *jobStorage) CreateJobCategory(ctx context.Context, jobCategory dto.JobCategoryDto) (error, dto.JobCategoryDto) {
+	// create job category
+	jobCategory_db := db.JobCategory{
+		Name:        jobCategory.CategoryName,
+		Description: jobCategory.Description,
+	}
+
+	res := js.db.WithContext(ctx).Create(&jobCategory_db)
+
+	if err := res.Error; err != nil {
+
+		err := errors.WriteErr.Wrap(err, "error creating job category").
+			WithProperty(errors.ErrorCode, 500)
+
+		log.Println(err)
+		return err, jobCategory
+	}
+
+	return nil, jobCategory
+}
+
 func (js *jobStorage) GetJobCategories(ctx context.Context) (error, []dto.JobCategoryDto) {
 
 	var jobCategories []db.JobCategory
@@ -102,4 +123,36 @@ func (js *jobStorage) GetJobCategories(ctx context.Context) (error, []dto.JobCat
 
 	return nil, jobCategoryDtos
 
+}
+
+func (js *jobStorage) UpdateJobStatus(ctx context.Context, jobStatus dto.JobStatusDto) (error, dto.JobDto) {
+
+	job := db.Job{}
+	res := js.db.WithContext(ctx).Where("id = ?", jobStatus.JobId).First(&job)
+
+	if res.Error != nil {
+		err := errors.DbReadErr.Wrap(res.Error, "error reading job").
+			WithProperty(errors.ErrorCode, 500)
+
+		log.Println(err)
+		return err, dto.JobDto{}
+	}
+
+	job.Status = jobStatus.Status
+	res = js.db.WithContext(ctx).Save(&job)
+
+	if res.Error != nil {
+		err := errors.WriteErr.Wrap(res.Error, "error updating job status").
+			WithProperty(errors.ErrorCode, 500)
+
+		log.Println(err)
+		return err, dto.JobDto{}
+	}
+
+	return nil, dto.JobDto{
+		JobTitle:       job.Title,
+		JobDescription: job.Description,
+		Location:       job.Location,
+		JobType:        job.JobType,
+	}
 }

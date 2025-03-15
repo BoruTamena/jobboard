@@ -8,7 +8,7 @@ type Job struct {
 	Description    string           `json:"description"`
 	JobType        string           `json:"job_type"` // full-time, part-time, contract, internship
 	Location       string           `json:"location"`
-	Status         string           ` json:"status"`
+	Status         string           ` json:"status"` // open,closed
 	CategoryId     uuid.UUID        `json:"category_id"`
 	JobCategory    JobCategory      `gorm:"foreignKey:CategoryId"`
 	JobApplication []JobApplication `gorm:"foreignKey:JobId"`
