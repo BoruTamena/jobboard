@@ -32,9 +32,9 @@ func (athz *authzStorage) CheckPermision(sub, resource, act string) (bool, error
 	return athz.enforcer.Enforce(sub, resource, act)
 }
 
-func (athz *authzStorage) AddRole(user string, role string) error {
+func (athz *authzStorage) AddRole(userId string, role string) error {
 
-	_, err := athz.enforcer.AddRoleForUser(user, role)
+	_, err := athz.enforcer.AddRoleForUser(userId, role)
 
 	if err != nil {
 		return err
@@ -52,4 +52,15 @@ func (athz *authzStorage) AddPolicy(role, obj, act string) error {
 	}
 
 	return athz.enforcer.SavePolicy()
+}
+
+func (athz *authzStorage) CreateRole(userId string, role string) error {
+
+	_, err := athz.enforcer.AddGroupingPolicy(userId, role)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

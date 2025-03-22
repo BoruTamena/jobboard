@@ -23,5 +23,8 @@ type Job interface {
 	UpdateJobStatus(ctx *gin.Context)
 }
 
-type JobApplicationHandler interface {
+type JobApplication interface {
+	ApplyJob(ctx *gin.Context)
+	UpdateApplicationStatus(ctx *gin.Context)
+	GetJobApplicationByID(ctx *gin.Context)
 }

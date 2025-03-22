@@ -30,7 +30,6 @@ func (athz *authzModule) AddRoleForUser(ctx context.Context, user, role string) 
 	err := athz.athzStorage.AddRole(user, role)
 
 	if err != nil {
-		// log error here
 		return err
 	}
 

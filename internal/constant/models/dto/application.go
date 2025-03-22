@@ -24,3 +24,14 @@ func (j AppilicationDto) Validate() error {
 		validation.Field(&j.Status, validation.Required, validation.In("pending", "accepted", "rejected")),
 	)
 }
+
+type AppilicationStatusDto struct {
+	ID     string `js:"id,omitempty"`
+	Status string `json:"status"` // accepted rejected
+}
+
+func (ja AppilicationStatusDto) Validate() error {
+	return validation.ValidateStruct(&ja,
+		validation.Field(&ja.Status, validation.Required, validation.In("accept", "reject")),
+	)
+}

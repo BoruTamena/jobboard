@@ -4,10 +4,12 @@ import (
 
 	// "github.com/BoruTamena/jobboard/internal/module"
 	"github.com/BoruTamena/jobboard/internal/module"
+	"github.com/BoruTamena/jobboard/internal/module/application"
 	"github.com/BoruTamena/jobboard/internal/module/auth"
 	"github.com/BoruTamena/jobboard/internal/module/authz"
 	"github.com/BoruTamena/jobboard/internal/module/job"
 	"github.com/BoruTamena/jobboard/internal/module/user"
+
 	"github.com/BoruTamena/jobboard/platform"
 )
 
@@ -16,6 +18,7 @@ type Module struct {
 	authzModule       module.AuthzModule
 	userProfileModule module.UserProfile
 	jobModule         module.Job
+	applicationModule module.JobApplicationModule
 	cache             platform.RedisCache
 }
 
@@ -26,6 +29,7 @@ func InitModule(persistence Persistance, platform Platform) Module {
 		authzModule:       authz.InitAuthzModule(persistence.authzStorage),
 		userProfileModule: user.InitUserProfileModule(persistence.profileStorage),
 		jobModule:         job.NewJobModule(persistence.jobStorage),
+		applicationModule: application.NewJobApplicationModule(persistence.jobApplicationStorage),
 		cache:             platform.redis,
 	}
 

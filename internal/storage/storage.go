@@ -9,9 +9,10 @@ import (
 )
 
 type AuthzStorage interface {
-	AddRole(user string, role string) error
+	AddRole(userId string, role string) error
 	AddPolicy(role, obj, act string) error
 	CheckPermision(sub, resource, act string) (bool, error)
+	CreateRole(userId string, role string) error
 }
 
 type AuthStorage interface {
@@ -35,4 +36,6 @@ type JobStorage interface {
 
 type JobApplicationStorage interface {
 	CreateJobApplication(ctx context.Context, jbApplication dto.AppilicationDto) (error, dto.AppilicationDto)
+	UpdateJobApplicationStatus(ctx context.Context, jobStatus dto.AppilicationStatusDto) (error, dto.AppilicationDto)
+	GetJobApplications(ctx context.Context, jobId string) ([]dto.AppilicationDto, error)
 }
