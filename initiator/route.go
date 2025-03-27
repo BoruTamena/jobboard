@@ -3,6 +3,7 @@ package initiator
 import (
 	"github.com/BoruTamena/jobboard/docs"
 	authroute "github.com/BoruTamena/jobboard/internal/glue/routing/auth_route"
+	jobroute "github.com/BoruTamena/jobboard/internal/glue/routing/job_route"
 	userroute "github.com/BoruTamena/jobboard/internal/glue/routing/user_route"
 	"github.com/gin-gonic/gin"
 	swaggerFile "github.com/swaggo/files"
@@ -24,5 +25,8 @@ func InitRouting(
 	authroute.InitAuthRoute(rg, handler.authHandler)
 	// initializign userprofile route
 	userroute.InitUserProfileRouter(rg, handler.userProfileHandler, module.authzModule)
+
+	//initializing job route
+	jobroute.InitJobRoute(rg, handler.jobHandler)
 
 }

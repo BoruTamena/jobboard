@@ -14,3 +14,14 @@ type UserProfile interface {
 	GetUserProfile(ctx *gin.Context)
 	UpdateUserProfile(ctx *gin.Context)
 }
+
+type Job interface {
+	CreateJob(ctx *gin.Context)
+	GetJob(ctx *gin.Context)
+	CreateJobCategory(ctx *gin.Context)
+	GetJobCategory(ctx *gin.Context)
+	UpdateJobStatus(ctx *gin.Context)
+}
+
+type JobApplicationHandler interface {
+}

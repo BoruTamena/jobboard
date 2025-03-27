@@ -23,3 +23,15 @@ type UserProfile interface {
 	UpdateUserProfile(ctx context.Context, user_id string, userProfileData dto.UserProfie) (db.UserProfile, error)
 	GetUserProfile(ctx context.Context, user_id string) (db.User, error)
 }
+
+type Job interface {
+	CreateJob(ctx context.Context, job dto.JobDto) (error, dto.JobDto)
+	GetJobs(cxt context.Context, pagination dto.Pagination) (error, []dto.JobDto)
+	CreateJobCategory(cxt context.Context, jobCategory dto.JobCategoryDto) (error, dto.JobCategoryDto)
+	GetJobCategories(cxt context.Context) (error, []dto.JobCategoryDto)
+	UpdateJobStatus(ctx context.Context, jobStatus dto.JobStatusDto) (error, dto.JobDto)
+}
+
+type JobApplicationModule interface {
+	ApplyJob(cxt context.Context, jbappilicaiton dto.AppilicationDto) (error, dto.AppilicationDto)
+}
