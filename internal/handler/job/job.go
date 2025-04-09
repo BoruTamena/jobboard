@@ -10,6 +10,7 @@ import (
 	"github.com/BoruTamena/jobboard/internal/handler"
 	"github.com/BoruTamena/jobboard/internal/module"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 type jobHandler struct {
@@ -180,6 +181,8 @@ func (j jobHandler) UpdateJobStatus(ctx *gin.Context) {
 
 	var jobStatus dto.JobStatusDto
 
+	Id := ctx.Param("id") // getting id
+
 	if err := ctx.Bind(&jobStatus); err != nil {
 
 		err := errors.BadInput.Wrap(err, "couldn't bind user input").
@@ -190,6 +193,8 @@ func (j jobHandler) UpdateJobStatus(ctx *gin.Context) {
 		return
 
 	}
+
+	jobStatus.JobId, _ = uuid.Parse(Id) // pparsing id to uuid.UUID
 
 	err, job := j.jobModule.UpdateJobStatus(ctx, jobStatus)
 

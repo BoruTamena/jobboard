@@ -34,7 +34,6 @@ func (j *jobApplicationModule) ApplyJob(cxt context.Context, jbappilicaiton dto.
 	}
 
 	// saving application to db
-
 	err, jappilication := j.jobApplicationStorage.CreateJobApplication(cxt, jbappilicaiton)
 
 	if err != nil {
@@ -44,4 +43,34 @@ func (j *jobApplicationModule) ApplyJob(cxt context.Context, jbappilicaiton dto.
 	}
 
 	return nil, jappilication
+}
+
+func (j *jobApplicationModule) UpdateApplicationStatus(ctx context.Context, applicationStatus dto.AppilicationStatusDto) (error, dto.AppilicationDto) {
+
+	if err := applicationStatus.Validate(); err != nil {
+
+		err := errors.BadInput.Wrap(err, "err:: bad user ").
+			WithProperty(errors.ErrorCode, 400)
+
+		return err, dto.AppilicationDto{}
+
+	}
+
+	err, application := j.jobApplicationStorage.UpdateJobApplicationStatus(ctx, applicationStatus)
+
+	if err != nil {
+
+		return err, dto.AppilicationDto{}
+	}
+
+	return nil, application
+}
+
+func (j *jobApplicationModule) GetJobApplicationByJobID(ctx context.Context, jobID string) (error, []dto.AppilicationDto) {
+
+	application, err := j.jobApplicationStorage.GetJobApplications(ctx, jobID)
+	if err != nil {
+		return err, []dto.AppilicationDto{}
+	}
+	return nil, application
 }

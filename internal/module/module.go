@@ -34,4 +34,6 @@ type Job interface {
 
 type JobApplicationModule interface {
 	ApplyJob(cxt context.Context, jbappilicaiton dto.AppilicationDto) (error, dto.AppilicationDto)
+	UpdateApplicationStatus(ctx context.Context, applicationStatus dto.AppilicationStatusDto) (error, dto.AppilicationDto)
+	GetJobApplicationByJobID(ctx context.Context, jobID string) (error, []dto.AppilicationDto)
 }
