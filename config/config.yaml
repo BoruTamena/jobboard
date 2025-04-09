@@ -1,7 +1,7 @@
 database:
   dbname: job_board
-  pgurl: postgres://postgres:password@localhost:5430/job_board?sslmode=disable
-  # pgurl: postgres://postgres:password@psql_db:5432/job_board?sslmode=disable
+  # pgurl: postgres://postgres:password@localhost:5432/job_board?sslmode=disable
+  pgurl: postgres://postgres:password@psql_db:5432/job_board?sslmode=disable
 server:
   host: localhost
   port: 8000
@@ -14,5 +14,5 @@ migration:
   path: internal/constant/query/schemas
 
 authz:
-  model: config/rabc_model.conf
-  adapter: config/policy.csv
+  model: config/basic_model.conf 
+  adapter: config/basic_policy.csv

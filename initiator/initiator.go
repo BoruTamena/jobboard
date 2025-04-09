@@ -47,7 +47,7 @@ func Init() {
 	UpMigiration(mg)
 
 	// Init Persistence layer
-	// con_pol := InitPgDb(*config)
+	log.Println("initialiing persistence layer ")
 	pdb := persistencedb.NewPersistenceDb(*config)
 
 	persistence := InitPersistence(*config, pdb)
